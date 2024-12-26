@@ -3,6 +3,10 @@ from langchain_core.messages import HumanMessage
 
 from agents.state import AgentState, show_agent_reasoning
 
+import pandas as pd
+
+import numpy as np
+
 import json
 
 ##### Sentiment Agent #####
@@ -13,15 +17,15 @@ def sentiment_agent(state: AgentState):
     show_reasoning = state["metadata"]["show_reasoning"]
 
     # Loop through the insider trades, if transaction_shares is negative, then it is a sell, which is bearish, if positive, then it is a buy, which is bullish
-    signals = []
-    for trade in insider_trades:
-        transaction_shares = trade["transaction_shares"]
-        if not transaction_shares:
-            continue
-        if transaction_shares < 0:
-            signals.append("bearish")
-        else:
-            signals.append("bullish")
+
+    # dropping na values 
+    transaction_shares = pd.Series([t['trade'] for t in insider_trades]).dropna()
+    
+    # vectorized form of the previous loop for more efficiency while dealing with large data.
+    bearish_condition = transaction_shares < 0
+    signals = np.where(bearish_condition,
+                       x="bearish", # if condition is True
+                       y="bullish").tolist() # if condition is False
 
     # Determine overall signal
     bullish_signals = signals.count("bullish")
