@@ -12,7 +12,7 @@ This system employs several agents working together:
 6. Risk Manager - Calculates risk metrics and sets position limits
 7. Portfolio Manager - Makes final trading decisions and generates orders
 
-![image](https://github.com/user-attachments/assets/e7cd0f4c-3ca3-4e2e-addc-006bc31d76aa)
+![Screenshot 2024-12-27 at 5 49 56 PM](https://github.com/user-attachments/assets/c281b8c3-d8e6-431e-a05e-d309d306e967)
 
 Note: the system simulates trading decisions, it does not actually trade.
 
