@@ -8,8 +8,9 @@ This system employs several agents working together:
 2. Sentiment Agent - Analyzes market sentiment and generates trading signals
 3. Fundamentals Agent - Analyzes fundamental data and generates trading signals
 4. Technical Analyst - Analyzes technical indicators and generates trading signals
-5. Risk Manager - Calculates risk metrics and sets position limits
-6. Portfolio Manager - Makes final trading decisions and generates orders
+5. Valuation Agent - Calculates the intrinsic value of a stock and generates trading signals
+6. Risk Manager - Calculates risk metrics and sets position limits
+7. Portfolio Manager - Makes final trading decisions and generates orders
 
 ![image](https://github.com/user-attachments/assets/e7cd0f4c-3ca3-4e2e-addc-006bc31d76aa)
 
@@ -120,6 +121,7 @@ ai-hedge-fund/
 │   │   ├── sentiment.py          # Sentiment analysis agent
 │   │   ├── state.py              # Agent state
 │   │   ├── technicals.py         # Technical analysis agent
+│   │   ├── valuation.py          # Valuation analysis agent
 │   ├── tools/                    # Agent tools
 │   │   ├── api.py                # API tools
 │   ├── backtester.py             # Backtesting tools
