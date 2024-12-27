@@ -5,10 +5,10 @@ This is a proof concept for an AI-powered hedge fund.  The goal of this project 
 This system employs several agents working together:
 
 1. Market Data Analyst - Gathers and preprocesses market data
-2. Sentiment Agent - Analyzes market sentiment and generates trading signals
-3. Fundamentals Agent - Analyzes fundamental data and generates trading signals
-4. Technical Analyst - Analyzes technical indicators and generates trading signals
-5. Valuation Agent - Calculates the intrinsic value of a stock and generates trading signals
+2. Valuation Agent - Calculates the intrinsic value of a stock and generates trading signals
+3. Sentiment Agent - Analyzes market sentiment and generates trading signals
+4. Fundamentals Agent - Analyzes fundamental data and generates trading signals
+5. Technical Analyst - Analyzes technical indicators and generates trading signals
 6. Risk Manager - Calculates risk metrics and sets position limits
 7. Portfolio Manager - Makes final trading decisions and generates orders
 
