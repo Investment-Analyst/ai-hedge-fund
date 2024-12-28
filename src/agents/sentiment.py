@@ -23,9 +23,7 @@ def sentiment_agent(state: AgentState):
     
     # vectorized form of the previous loop for more efficiency while dealing with large data.
     bearish_condition = transaction_shares < 0
-    signals = np.where(bearish_condition,
-                       x="bearish", # if condition is True
-                       y="bullish").tolist() # if condition is False
+    signals = np.where(bearish_condition, "bearish", "bullish").tolist()
 
     # Determine overall signal
     bullish_signals = signals.count("bullish")
