@@ -2,7 +2,27 @@
 
 
 
-本系統採用數個 AI Agent 程式共同運作：
+
+
+
+
+
+用6個 AI Agent 分工來模擬的避險基金（hedge fund) 
+基於 langchainai 開發，，其中透過底下這6個 AI Agent 來實現這個 hedge fund ：
+1. 市場數據agent
+收集市場數據，例如股價、基本面資料等。
+2. 量化agent
+計算技術指標，如 MACD、RSI、布林帶（Bollinger Bands）等。
+3. 基本面agent
+分析公司獲利能力、成長性、財務健康狀況和估值。
+4. 情緒分析agent
+研究內部人交易行為，判斷內部人的市場情緒。
+5. 風險管理agent
+計算風險指標，如波動率、最大回撤等。
+6. 投資組合管理agent
+負責最終的交易決策並生成交易指令。
+每個 agent 都會展示其推理過程，讓你清楚了解它們的運作方式
+
 
 1. 市場資料分析師 - 收集和預先處理市場資料
 2. 估值代理 - 計算股票的內在價值並產生交易信號
@@ -12,6 +32,7 @@
 6. 風險管理員 - 計算風險指標並設定持倉限制
 7. 投資組合經理 - 作出最終交易決策並產生訂單
 
+   
 This system employs several agents working together:
 
 1. Market Data Analyst - Gathers and preprocesses market data
