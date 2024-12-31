@@ -1,6 +1,16 @@
 # AI Hedge Fund
 
-This is a proof concept for an AI-powered hedge fund.  The goal of this project is to explore the use of AI to make trading decisions.  This project is for **educational** purposes only and is not intended for real trading or investment.
+
+
+本系統採用數個 AI Agent 程式共同運作：
+
+1. 市場資料分析師 - 收集和預先處理市場資料
+2. 估值代理 - 計算股票的內在價值並產生交易信號
+3. 情緒代理 - 分析市場情緒並產生交易信號
+4. Fundamentals Agent - 分析基本面數據並產生交易信號
+5. 技術分析師 - 分析技術指標並產生交易信號
+6. 風險管理員 - 計算風險指標並設定持倉限制
+7. 投資組合經理 - 作出最終交易決策並產生訂單
 
 This system employs several agents working together:
 
@@ -14,19 +24,7 @@ This system employs several agents working together:
 
 ![Screenshot 2024-12-27 at 5 49 56 PM](https://github.com/user-attachments/assets/c281b8c3-d8e6-431e-a05e-d309d306e967)
 
-Note: the system simulates trading decisions, it does not actually trade.
 
-## Disclaimer
-
-This project is for **educational and research purposes only**.
-
-- Not intended for real trading or investment
-- No warranties or guarantees provided
-- Past performance does not indicate future results
-- Creator assumes no liability for financial losses
-- Consult a financial advisor for investment decisions
-
-By using this software, you agree to use it solely for learning purposes.
 
 ## Table of Contents
 - [Setup](#setup)
