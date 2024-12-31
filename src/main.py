@@ -1,3 +1,8 @@
+import sys
+import os
+
+# 將 Poetry 的虛擬環境路徑或項目路徑添加到 sys.path
+sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
 from langchain_core.messages import HumanMessage
 from langgraph.graph import END, StateGraph
 
@@ -9,9 +14,20 @@ from agents.risk_manager import risk_management_agent
 from agents.sentiment import sentiment_agent
 from agents.state import AgentState
 from agents.valuation import valuation_agent
+from dotenv import load_dotenv
 
 import argparse
 from datetime import datetime
+
+# 加載環境變數
+load_dotenv()
+
+# 檢查 API Key 是否加載成功
+if not os.getenv("OPENAI_API_KEY"):
+    raise ValueError("OPENAI_API_KEY is not set. Please check your .env file.")
+if not os.getenv("FINANCIAL_DATASETS_API_KEY"):
+    raise ValueError("FINANCIAL_DATASETS_API_KEY is not set. Please check your .env file.")
+
 
 
 ##### Run the Hedge Fund #####
@@ -35,6 +51,7 @@ def run_hedge_fund(ticker: str, start_date: str, end_date: str, portfolio: dict,
         },
     )
     return final_state["messages"][-1].content
+
 
 # Define the new workflow
 workflow = StateGraph(AgentState)
@@ -70,28 +87,28 @@ if __name__ == "__main__":
     parser.add_argument('--start-date', type=str, help='Start date (YYYY-MM-DD). Defaults to 3 months before end date')
     parser.add_argument('--end-date', type=str, help='End date (YYYY-MM-DD). Defaults to today')
     parser.add_argument('--show-reasoning', action='store_true', help='Show reasoning from each agent')
-    
+
     args = parser.parse_args()
-    
+
     # Validate dates if provided
     if args.start_date:
         try:
             datetime.strptime(args.start_date, '%Y-%m-%d')
         except ValueError:
             raise ValueError("Start date must be in YYYY-MM-DD format")
-    
+
     if args.end_date:
         try:
             datetime.strptime(args.end_date, '%Y-%m-%d')
         except ValueError:
             raise ValueError("End date must be in YYYY-MM-DD format")
-    
+
     # Sample portfolio - you might want to make this configurable too
     portfolio = {
         "cash": 100000.0,  # $100,000 initial cash
-        "stock": 0         # No initial stock position
+        "stock": 0  # No initial stock position
     }
-    
+
     result = run_hedge_fund(
         ticker=args.ticker,
         start_date=args.start_date,
