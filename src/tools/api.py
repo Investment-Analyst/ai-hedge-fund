@@ -3,7 +3,11 @@ from typing import Dict, Any, List
 import pandas as pd
 import requests
 
-import requests
+# 統一的 headers 設置
+headers = {"X-API-KEY": os.getenv("FINANCIAL_DATASETS_API_KEY")}
+if not headers["X-API-KEY"]:
+    raise ValueError("FINANCIAL_DATASETS_API_KEY is not set. Please check your .env file.")
+
 
 def get_financial_metrics(
     ticker: str,
