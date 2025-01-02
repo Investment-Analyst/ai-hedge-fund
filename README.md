@@ -41,7 +41,7 @@ This system employs several agents working together:
 
 Clone the repository:
 ```bash
-git clone https://github.com/virattt/ai-hedge-fund.git
+git clone https://github.com/Investment-Analyst/ai-hedge-fund.git
 cd ai-hedge-fund
 ```
 
@@ -72,17 +72,288 @@ export FINANCIAL_DATASETS_API_KEY='your-api-key-here' # Get a key from https://f
 poetry run python src/main.py --ticker AAPL
 ```
 
+**Example Output:**
+```
+Final Result:
+{
+    "action": "hold",
+    "quantity": 0,
+    "confidence": 0.63,
+    "agent_signals": [
+        {
+            "agent_name": "Valuation Analysis",
+            "signal": "bearish",
+            "confidence": 0.82
+        },
+        {
+            "agent_name": "Fundamental Analysis",
+            "signal": "bearish",
+            "confidence": 0.5
+        },
+        {
+            "agent_name": "Technical Analysis",
+            "signal": "bullish",
+            "confidence": 0.24
+        },
+        {
+            "agent_name": "Sentiment Analysis",
+            "signal": "bearish",
+            "confidence": 1.0
+        }
+    ],
+    "reasoning": "The risk management constraints require a bearish action, but since the current position is 0 shares, selling is 
+not possible. Valuation Analysis provides a strong bearish signal with 82% confidence due to significant overvaluation. Fundamental
+ Analysis also supports a bearish stance with concerns over growth and high price ratios. Sentiment is unanimously bearish with 100
+% confidence. Technical Analysis is bullish but holds the least weight and confidence. Given these factors, the decision is to hold, with no buy or sell action possible due to portfolio constraints."
+}
+```
+
 You can also specify a `--show-reasoning` flag to print the reasoning of each agent to the console.
 
 ```bash
 poetry run python src/main.py --ticker AAPL --show-reasoning
 ```
+
+**Example Output:**
+```
+
+==========  Fundamental Analysis Agent  ==========
+{
+  "signal": "bearish",
+  "confidence": "50%",
+  "reasoning": {
+    "profitability_signal": {
+      "signal": "bullish",
+      "details": "ROE: 137.90%, Net Margin: 24.00%, Op Margin: 31.58%"
+    },
+    "growth_signal": {
+      "signal": "bearish",
+      "details": "Revenue Growth: 1.41%, Earnings Growth: -8.06%"
+    },
+    "financial_health_signal": {
+      "signal": "neutral",
+      "details": "Current Ratio: 0.87, D/E: 5.41"
+    },
+    "price_ratios_signal": {
+      "signal": "bearish",
+      "details": "P/E: 36.95, P/B: 60.81, P/S: 8.86"
+    }
+  }
+}
+
+==========   Valuation Analysis Agent   ==========================================================
+
+{
+  "signal": "bearish",
+  "confidence": "82%",
+  "reasoning": {
+    "dcf_analysis": {
+      "signal": "bearish",
+      "details": "Intrinsic Value: $1,066,951,000,140.94, Market Cap: $3,785,304,395,660.00, Gap: -71.8%"
+    },
+    "owner_earnings_analysis": {
+      "signal": "bearish",
+      "details": "Owner Earnings Value: $329,466,172,364.20, Market Cap: $3,785,304,395,660.00, Gap: -91.3%"
+    }
+  }
+}
+================================================
+
+==========   Sentiment Analysis Agent   ==========
+{
+  "signal": "bearish",
+  "confidence": "100%",
+  "reasoning": "Bullish signals: 0, Bearish signals: 4"
+}
+================================================
+
+==========      Technical Analyst       ==========
+{
+  "signal": "bullish",
+  "confidence": "24%",
+  "strategy_signals": {
+    "trend_following": {
+      "signal": "bullish",
+      "confidence": "47%",
+      "metrics": {
+        "adx": 46.965186241303456,
+        "trend_strength": 0.4696518624130346
+      }
+    },
+    "mean_reversion": {
+      "signal": "neutral",
+      "confidence": "50%",
+      "metrics": {
+        "z_score": 1.1464485714115078,
+        "price_vs_bb": 0.5301399395699092,
+        "rsi_14": 53.982566877066404,
+        "rsi_28": 70.35674880470765
+      }
+    },
+    "momentum": {
+      "signal": "neutral",
+      "confidence": "50%",
+      "metrics": {
+        "momentum_1m": 0.054807993022794266,
+        "momentum_3m": NaN,
+        "momentum_6m": NaN,
+        "volume_momentum": 0.7967340841582854
+      }
+    },
+    "volatility": {
+      "signal": "neutral",
+      "confidence": "50%",
+      "metrics": {
+        "historical_volatility": 0.16263301280136414,
+        "volatility_regime": NaN,
+        "volatility_z_score": NaN,
+        "atr_ratio": 0.017527696327312967
+      }
+    },
+    "statistical_arbitrage": {
+      "signal": "neutral",
+      "confidence": "50%",
+      "metrics": {
+        "hurst_exponent": 4.686994974318529e-16,
+        "skewness": NaN,
+        "kurtosis": NaN
+      }
+    }
+  }
+}
+================================================
+
+==========    Risk Management Agent     ==========
+{
+  "max_position_size": 25000.0,
+  "risk_score": 4,
+  "trading_action": "bearish",
+  "risk_metrics": {
+    "volatility": 0.16928687183949434,
+    "value_at_risk_95": -0.018062898239189856,
+    "max_drawdown": -0.061189106901217816,
+    "market_risk_score": 0,
+    "stress_test_results": {
+      "market_crash": {
+        "potential_loss": -0.0,
+        "portfolio_impact": -0.0
+      },
+      "moderate_decline": {
+        "potential_loss": -0.0,
+        "portfolio_impact": -0.0
+      },
+      "slight_decline": {
+        "potential_loss": -0.0,
+        "portfolio_impact": -0.0
+      }
+    }
+  },
+  "reasoning": "Risk Score 4/10: Market Risk=0, Volatility=16.93%, VaR=-1.81%, Max Drawdown=-6.12%"
+}
+================================================
+
+==========  Portfolio Management Agent  ==========
+{
+  "action": "hold",
+  "quantity": 0,
+  "confidence": 0.1,
+  "agent_signals": [
+    {
+      "agent_name": "Valuation Analysis",
+      "signal": "bearish",
+      "confidence": 0.82
+    },
+    {
+      "agent_name": "Fundamental Analysis",
+      "signal": "bearish",
+      "confidence": 0.5
+    },
+    {
+      "agent_name": "Technical Analysis",
+      "signal": "bullish",
+      "confidence": 0.24
+    },
+    {
+      "agent_name": "Sentiment Analysis",
+      "signal": "bearish",
+      "confidence": 1.0
+    }
+  ],
+  "reasoning": "Risk management constraints dictate a bearish action. Valuation, fundamental, and sentiment analyses are all bearish, outweighing the technical analysis' bullish signal. Without current shares to sell, holding is the most prudent action."        
+}
+================================================
+
+Final Result:
+{
+    "action": "hold",
+    "quantity": 0,
+    "confidence": 0.1,
+    "agent_signals": [
+        {
+            "agent_name": "Valuation Analysis",
+            "signal": "bearish",
+            "confidence": 0.82
+        },
+        {
+            "agent_name": "Fundamental Analysis",
+            "signal": "bearish",
+            "confidence": 0.5
+        },
+        {
+            "agent_name": "Technical Analysis",
+            "signal": "bullish",
+            "confidence": 0.24
+        },
+        {
+            "agent_name": "Sentiment Analysis",
+            "signal": "bearish",
+            "confidence": 1.0
+        }
+    ],
+    "reasoning": "Risk management constraints dictate a bearish action. Valuation, fundamental, and sentiment analyses are all bearish, outweighing the technical analysis' bullish signal. Without current shares to sell, holding is the most prudent action."      
+}
+
+```
 You can optionally specify the start and end dates to make decisions for a specific time period.
 
 ```bash
-poetry run python src/main.py --ticker AAPL --start-date 2024-01-01 --end-date 2024-03-01 
+poetry run python src/main.py --ticker AAPL --start-date 2024-01-01 --end-date 2025-01-01 
 ```
 
+**Example Output:**
+```
+
+Final Result:
+{
+    "action": "hold",
+    "quantity": 0,
+    "confidence": 0.82,
+    "agent_signals": [
+        {
+            "agent": "Technical Analysis",
+            "signal": "bullish",
+            "confidence": 0.24
+        },
+        {
+            "agent": "Fundamental Analysis",
+            "signal": "bearish",
+            "confidence": 0.50
+        },
+        {
+            "agent": "Sentiment Analysis",
+            "signal": "bearish",
+            "confidence": 1.00
+        },
+        {
+            "agent": "Valuation Analysis",
+            "signal": "bearish",
+            "confidence": 0.82
+        }
+    ],
+    "reasoning": "The risk management constraints require a 'hold' action. The dominant bearish signals from valuation (82% confide
+nce) and sentiment (100% confidence) outweigh the bullish technical signal (24% confidence). Fundamental analysis is also bearish. Thus, despite the technical bullish signal, the overall bearish sentiment and valuation drive the decision to hold."
+
+```
 ### Running the Backtester
 
 ```bash
