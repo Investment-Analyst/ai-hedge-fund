@@ -52,14 +52,14 @@ class Backtester:
         return 0
 
     def run_backtest(self):
-        dates = pd.date_range(self.start_date, self.end_date, freq="B")
+        dates = pd.date_range(self.start_date, self.end_date, freq="5B") # 將頻率改為每 5 個交易日
 
         print("\nStarting backtest...")
         print(f"{'Date':<12} {'Ticker':<6} {'Action':<6} {'Quantity':>8} {'Price':>8} {'Cash':>12} {'Stock':>8} {'Total Value':>12}")
         print("-" * 100)
 
         for current_date in dates:
-            lookback_start = (current_date - timedelta(days=30)).strftime("%Y-%m-%d")
+            lookback_start = (current_date - timedelta(days=30)).strftime("%Y-%m-%d") #設置過去 30 天作為回溯期，用於獲取歷史數據，例如股票價格或其他財務指標。這在技術分析或策略設計中很常見，例如計算移動平均線或趨勢
             current_date_str = current_date.strftime("%Y-%m-%d")
 
             agent_output = self.agent(
@@ -134,7 +134,7 @@ if __name__ == "__main__":
     parser = argparse.ArgumentParser(description='Run backtesting simulation')
     parser.add_argument('--ticker', type=str, help='Stock ticker symbol (e.g., AAPL)')
     parser.add_argument('--end_date', type=str, default=datetime.now().strftime('%Y-%m-%d'), help='End date in YYYY-MM-DD format')
-    parser.add_argument('--start_date', type=str, default=(datetime.now() - timedelta(days=90)).strftime('%Y-%m-%d'), help='Start date in YYYY-MM-DD format')
+    parser.add_argument('--start_date', type=str, default=(datetime.now() - timedelta(days=90)).strftime('%Y-%m-%d'), help='Start date in YYYY-MM-DD format') # 默認的開始日期是 90 天前
     parser.add_argument('--initial_capital', type=float, default=100000, help='Initial capital amount (default: 100000)')
 
     args = parser.parse_args()
