@@ -16,7 +16,7 @@ def portfolio_management_agent(state: AgentState):
     fundamentals_message = next(msg for msg in state["messages"] if msg.name == "fundamentals_agent")
     sentiment_message = next(msg for msg in state["messages"] if msg.name == "sentiment_agent")
     valuation_message = next(msg for msg in state["messages"] if msg.name == "valuation_agent")
-    risk_message = next(msg for msg in state["messages"] if msg.name == "risk_management_agent")
+    #risk_message = next(msg for msg in state["messages"] if msg.name == "risk_management_agent") #不考慮risk
 
     # Create the prompt template
     template = ChatPromptTemplate.from_messages(
@@ -24,13 +24,7 @@ def portfolio_management_agent(state: AgentState):
             (
                 "system",
                 """You are a portfolio manager making final trading decisions.
-                Your job is to make a trading decision based on the team's analysis while strictly adhering
-                to risk management constraints.
-
-                RISK MANAGEMENT CONSTRAINTS:
-                - You MUST NOT exceed the max_position_size specified by the risk manager
-                - You MUST follow the trading_action (buy/sell/hold) recommended by risk management
-                - These are hard constraints that cannot be overridden by other signals
+                Your job is to make a trading decision based on the team's analysis.
 
                 When weighing the different signals for direction and timing:
                 1. Valuation Analysis (35% weight)
@@ -47,14 +41,13 @@ def portfolio_management_agent(state: AgentState):
                 
                 4. Sentiment Analysis (10% weight)
                    - Final consideration
-                   - Can influence sizing within risk limits
+                   - Helps gauge market mood
                 
                 The decision process should be:
-                1. First check risk management constraints
+                1. First evaluate fundamentals signal
                 2. Then evaluate valuation signal
-                3. Then evaluate fundamentals signal
-                4. Use technical analysis for timing
-                5. Consider sentiment for final adjustment
+                3. Use technical analysis for timing
+                4. Consider sentiment for final adjustment
                 
                 Provide the following in your output:
                 - "action": "buy" | "sell" | "hold",
@@ -64,11 +57,7 @@ def portfolio_management_agent(state: AgentState):
                 - "reasoning": <concise explanation of the decision including how you weighted the signals>
 
                 Trading Rules:
-                - Never exceed risk management position limits
-                - Only buy if you have available cash
-                - Only sell if you have shares to sell
-                - Quantity must be ≤ current position for sells
-                - Quantity must be ≤ max_position_size from risk management"""
+                - Go long if there is a “buy” signal and go short if there is a “sell” signal."""
             ),
             (
                 "human",
@@ -78,7 +67,7 @@ def portfolio_management_agent(state: AgentState):
                 Fundamental Analysis Trading Signal: {fundamentals_message}
                 Sentiment Analysis Trading Signal: {sentiment_message}
                 Valuation Analysis Trading Signal: {valuation_message}
-                Risk Management Trading Signal: {risk_message}
+                
 
                 Here is the current portfolio:
                 Portfolio:
@@ -102,7 +91,7 @@ def portfolio_management_agent(state: AgentState):
             "fundamentals_message": fundamentals_message.content,
             "sentiment_message": sentiment_message.content,
             "valuation_message": valuation_message.content,
-            "risk_message": risk_message.content,
+
             "portfolio_cash": f"{portfolio['cash']:.2f}",
             "portfolio_stock": portfolio["stock"]
         }

@@ -627,17 +627,23 @@ def calculate_hurst_exponent(price_series: pd.Series, max_lag: int = 20) -> floa
     Returns:
         float: Hurst exponent
     """
-    lags = range(2, max_lag)
+    lags = range(2, min(max_lag, len(price_series) // 2))
+    if len(lags) < 2:
+        return 0.5  # Default to random walk if insufficient data
+
     # Add small epsilon to avoid log(0)
-    tau = [max(1e-8, np.sqrt(np.std(np.subtract(price_series[lag:], price_series[:-lag])))) for lag in lags]
-    
+    tau = [max(1e-6, np.sqrt(np.std(np.subtract(price_series[lag:], price_series[:-lag])))) for lag in lags]
+
     # Return the Hurst exponent from linear fit
     try:
+        if len(lags) < 2 or len(tau) < 2:
+            raise ValueError("Insufficient data for regression")
         reg = np.polyfit(np.log(lags), np.log(tau), 1)
-        return reg[0] # Hurst exponent is the slope
+        if abs(reg[0]) < 1e-6:
+            print("Warning: Hurst exponent calculation yielded near-zero slope.")
+        return reg[0]  # Hurst exponent is the slope
     except (ValueError, RuntimeWarning):
-        # Return 0.5 (random walk) if calculation fails
-        return 0.5
+        return 0.5  # Default to random walk
 
 def calculate_obv(prices_df: pd.DataFrame) -> pd.Series:
     obv = [0]

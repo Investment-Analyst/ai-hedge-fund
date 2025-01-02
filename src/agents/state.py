@@ -19,6 +19,9 @@ class AgentState(TypedDict):
 
 
 def show_agent_reasoning(output, agent_name):
+    if agent_name == "Risk Management Agent": # 不要輸出Risk Management Agent
+        return  # 跳過輸出
+
     print(f"\n{'=' * 10} {agent_name.center(28)} {'=' * 10}")
     
     def convert_to_serializable(obj):
