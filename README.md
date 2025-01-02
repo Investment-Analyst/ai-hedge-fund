@@ -104,7 +104,8 @@ Final Result:
     "reasoning": "The risk management constraints require a bearish action, but since the current position is 0 shares, selling is 
 not possible. Valuation Analysis provides a strong bearish signal with 82% confidence due to significant overvaluation. Fundamental
  Analysis also supports a bearish stance with concerns over growth and high price ratios. Sentiment is unanimously bearish with 100
-% confidence. Technical Analysis is bullish but holds the least weight and confidence. Given these factors, the decision is to hold, with no buy or sell action possible due to portfolio constraints."
+% confidence. Technical Analysis is bullish but holds the least weight and confidence. Given these factors, the decision is to hold,
+with no buy or sell action possible due to portfolio constraints."
 }
 ```
 
@@ -279,7 +280,9 @@ poetry run python src/main.py --ticker AAPL --show-reasoning
       "confidence": 1.0
     }
   ],
-  "reasoning": "Risk management constraints dictate a bearish action. Valuation, fundamental, and sentiment analyses are all bearish, outweighing the technical analysis' bullish signal. Without current shares to sell, holding is the most prudent action."        
+  "reasoning": "Risk management constraints dictate a bearish action. Valuation, fundamental,
+and sentiment analyses are all bearish, outweighing the technical analysis' bullish signal.
+Without current shares to sell, holding is the most prudent action."        
 }
 ================================================
 
@@ -310,7 +313,9 @@ Final Result:
             "confidence": 1.0
         }
     ],
-    "reasoning": "Risk management constraints dictate a bearish action. Valuation, fundamental, and sentiment analyses are all bearish, outweighing the technical analysis' bullish signal. Without current shares to sell, holding is the most prudent action."      
+    "reasoning": "Risk management constraints dictate a bearish action. Valuation, fundamental,
+and sentiment analyses are all bearish, outweighing the technical analysis' bullish signal.
+Without current shares to sell, holding is the most prudent action."      
 }
 
 ```
@@ -350,8 +355,7 @@ Final Result:
             "confidence": 0.82
         }
     ],
-    "reasoning": "The risk management constraints require a 'hold' action. The dominant bearish signals from valuation (82% confide
-nce) and sentiment (100% confidence) outweigh the bullish technical signal (24% confidence). Fundamental analysis is also bearish. Thus, despite the technical bullish signal, the overall bearish sentiment and valuation drive the decision to hold."
+    "reasoning": "The risk management constraints require a 'hold' action. The dominant bearish signals from valuation (82% confidence) and sentiment (100% confidence) outweigh the bullish technical signal (24% confidence). Fundamental analysis is also bearish. Thus, despite the technical bullish signal, the overall bearish sentiment and valuation drive the decision to hold."
 
 ```
 ### Running the Backtester
