@@ -113,7 +113,7 @@ Given these factors, the decision is to hold, with no buy or sell action possibl
 You can also specify a `--show-reasoning` flag to print the reasoning of each agent to the console.
 
 ```bash
-poetry run python src/main.py --ticker AAPL --show-reasoning
+poetry run python src/main.py --ticker AMD --show-reasoning
 ```
 
 **Example Output:**
@@ -125,37 +125,37 @@ poetry run python src/main.py --ticker AAPL --show-reasoning
   "confidence": "50%",
   "reasoning": {
     "profitability_signal": {
-      "signal": "bullish",
-      "details": "ROE: 137.90%, Net Margin: 24.00%, Op Margin: 31.58%"
+      "signal": "bearish",
+      "details": "ROE: 3.20%, Net Margin: 7.50%, Op Margin: 6.55%"
     },
     "growth_signal": {
-      "signal": "bearish",
-      "details": "Revenue Growth: 1.41%, Earnings Growth: -8.06%"
+      "signal": "neutral",
+      "details": "Revenue Growth: 4.38%, Earnings Growth: 34.86%"
     },
     "financial_health_signal": {
-      "signal": "neutral",
-      "details": "Current Ratio: 0.87, D/E: 5.41"
+      "signal": "bullish",
+      "details": "Current Ratio: 2.50, D/E: 0.22"
     },
     "price_ratios_signal": {
       "signal": "bearish",
-      "details": "P/E: 36.95, P/B: 60.81, P/S: 8.86"
+      "details": "P/E: 145.67, P/B: 4.67, P/S: 10.95"
     }
   }
 }
+================================================
 
-==========   Valuation Analysis Agent   ==========================================================
-
+==========   Valuation Analysis Agent   ==========
 {
   "signal": "bearish",
-  "confidence": "82%",
+  "confidence": "66%",
   "reasoning": {
     "dcf_analysis": {
       "signal": "bearish",
-      "details": "Intrinsic Value: $1,066,951,000,140.94, Market Cap: $3,785,304,395,660.00, Gap: -71.8%"
+      "details": "Intrinsic Value: $58,100,735,078.97, Market Cap: $196,018,899,323.34, Gap: -70.4%"
     },
     "owner_earnings_analysis": {
       "signal": "bearish",
-      "details": "Owner Earnings Value: $329,466,172,364.20, Market Cap: $3,785,304,395,660.00, Gap: -91.3%"
+      "details": "Owner Earnings Value: $75,054,227,036.91, Market Cap: $196,018,899,323.34, Gap: -61.7%"
     }
   }
 }
@@ -163,53 +163,53 @@ poetry run python src/main.py --ticker AAPL --show-reasoning
 
 ==========   Sentiment Analysis Agent   ==========
 {
-  "signal": "bearish",
-  "confidence": "100%",
-  "reasoning": "Bullish signals: 0, Bearish signals: 4"
+  "signal": "bullish",
+  "confidence": "67%",
+  "reasoning": "Bullish signals: 2, Bearish signals: 1"
 }
 ================================================
 
 ==========      Technical Analyst       ==========
 {
-  "signal": "bullish",
-  "confidence": "24%",
+  "signal": "bearish",
+  "confidence": "21%",
   "strategy_signals": {
     "trend_following": {
-      "signal": "bullish",
-      "confidence": "47%",
+      "signal": "bearish",
+      "confidence": "41%",
       "metrics": {
-        "adx": 46.965186241303456,
-        "trend_strength": 0.4696518624130346
+        "adx": 41.0529861434935,
+        "trend_strength": 0.410529861434935
       }
     },
     "mean_reversion": {
       "signal": "neutral",
       "confidence": "50%",
       "metrics": {
-        "z_score": 1.1464485714115078,
-        "price_vs_bb": 0.5301399395699092,
-        "rsi_14": 53.982566877066404,
-        "rsi_28": 70.35674880470765
+        "z_score": -1.5509675081196312,
+        "price_vs_bb": 0.248967253315503,
+        "rsi_14": 37.4774774774775,
+        "rsi_28": 35.0818094321463
       }
     },
     "momentum": {
       "signal": "neutral",
       "confidence": "50%",
       "metrics": {
-        "momentum_1m": 0.054807993022794266,
-        "momentum_3m": NaN,
-        "momentum_6m": NaN,
-        "volume_momentum": 0.7967340841582854
+        "momentum_1m": -0.12146209314793133,
+        "momentum_3m": -0.2581373746150951,
+        "momentum_6m": -0.2517667224417648,
+        "volume_momentum": 0.7962293356171966
       }
     },
     "volatility": {
       "signal": "neutral",
       "confidence": "50%",
       "metrics": {
-        "historical_volatility": 0.16263301280136414,
-        "volatility_regime": NaN,
-        "volatility_z_score": NaN,
-        "atr_ratio": 0.017527696327312967
+        "historical_volatility": 0.36826295249624114,
+        "volatility_regime": 0.8988278385390491,
+        "volatility_z_score": -0.5756173224340739,
+        "atr_ratio": 0.036669308007995
       }
     },
     "statistical_arbitrage": {
@@ -217,8 +217,8 @@ poetry run python src/main.py --ticker AAPL --show-reasoning
       "confidence": "50%",
       "metrics": {
         "hurst_exponent": 4.686994974318529e-16,
-        "skewness": NaN,
-        "kurtosis": NaN
+        "skewness": -0.83853114293348,
+        "kurtosis": 3.104187605840047
       }
     }
   }
@@ -227,14 +227,14 @@ poetry run python src/main.py --ticker AAPL --show-reasoning
 
 ==========    Risk Management Agent     ==========
 {
-  "max_position_size": 25000.0,
-  "risk_score": 4,
-  "trading_action": "bearish",
+  "max_position_size": 12500.0,
+  "risk_score": 10,
+  "trading_action": "hold",
   "risk_metrics": {
-    "volatility": 0.16928687183949434,
-    "value_at_risk_95": -0.018062898239189856,
-    "max_drawdown": -0.061189106901217816,
-    "market_risk_score": 0,
+    "volatility": 0.4693490668206053,
+    "value_at_risk_95": -0.050070329874617014,
+    "max_drawdown": -0.35377255925201134,
+    "market_risk_score": 6,
     "stress_test_results": {
       "market_crash": {
         "potential_loss": -0.0,
@@ -250,7 +250,7 @@ poetry run python src/main.py --ticker AAPL --show-reasoning
       }
     }
   },
-  "reasoning": "Risk Score 4/10: Market Risk=0, Volatility=16.93%, VaR=-1.81%, Max Drawdown=-6.12%"
+  "reasoning": "Risk Score 10/10: Market Risk=6, Volatility=46.93%, VaR=-5.01%, Max Drawdown=-35.38%"
 }
 ================================================
 
@@ -258,66 +258,70 @@ poetry run python src/main.py --ticker AAPL --show-reasoning
 {
   "action": "hold",
   "quantity": 0,
-  "confidence": 0.1,
+  "confidence": 0.66,
   "agent_signals": [
     {
-      "agent_name": "Valuation Analysis",
+      "agent": "Technical Analysis",
       "signal": "bearish",
-      "confidence": 0.82
+      "confidence": 0.21
     },
     {
-      "agent_name": "Fundamental Analysis",
+      "agent": "Fundamental Analysis",
       "signal": "bearish",
       "confidence": 0.5
     },
     {
-      "agent_name": "Technical Analysis",
+      "agent": "Sentiment Analysis",
       "signal": "bullish",
-      "confidence": 0.24
+      "confidence": 0.67
     },
     {
-      "agent_name": "Sentiment Analysis",
+      "agent": "Valuation Analysis",
       "signal": "bearish",
-      "confidence": 1.0
+      "confidence": 0.66
     }
   ],
-  "reasoning": "Risk management constraints dictate a bearish action. Valuation, fundamental,
-and sentiment analyses are all bearish, outweighing the technical analysis' bullish signal.
-Without current shares to sell, holding is the most prudent action."        
+  "reasoning": "The risk management signal mandates a 'hold' action, which must be adhered to. Valuation analysis is strongly beari
+sh with a high confidence of 66%, indicating overvaluation and a poor entry point. Fundamental analysis is also bearish, driven by 
+high valuation ratios and weak profitability. Technical analysis suggests bearish trends, though with lower confidence. Despite pos
+itive sentiment, the weight of bearish valuation and fundamental signals, combined with risk management constraints, supports a 'hold' decision."
 }
 ================================================
 
 Final Result:
 {
-    "action": "hold",
-    "quantity": 0,
-    "confidence": 0.1,
-    "agent_signals": [
-        {
-            "agent_name": "Valuation Analysis",
-            "signal": "bearish",
-            "confidence": 0.82
-        },
-        {
-            "agent_name": "Fundamental Analysis",
-            "signal": "bearish",
-            "confidence": 0.5
-        },
-        {
-            "agent_name": "Technical Analysis",
-            "signal": "bullish",
-            "confidence": 0.24
-        },
-        {
-            "agent_name": "Sentiment Analysis",
-            "signal": "bearish",
-            "confidence": 1.0
-        }
-    ],
-    "reasoning": "Risk management constraints dictate a bearish action. Valuation, fundamental,
-and sentiment analyses are all bearish, outweighing the technical analysis' bullish signal.
-Without current shares to sell, holding is the most prudent action."      
+  "action": "hold",
+  "quantity": 0,
+  "confidence": 0.66,
+  "agent_signals": [
+    {
+      "agent": "Technical Analysis",
+      "signal": "bearish",
+      "confidence": 0.21
+    },
+    {
+      "agent": "Fundamental Analysis",
+      "signal": "bearish",
+      "confidence": 0.50
+    },
+    {
+      "agent": "Sentiment Analysis",
+      "signal": "bullish",
+      "confidence": 0.67
+    },
+    {
+      "agent": "Valuation Analysis",
+      "signal": "bearish",
+      "confidence": 0.66
+    }
+  ],
+  "reasoning": "The risk management signal mandates a 'hold' action, which must be adhered to.
+Valuation analysis is strongly bearish with a high confidence of 66%, indicating overvaluation and a poor entry point.
+Fundamental analysis is also bearish, driven by high valuation ratios and weak profitability.
+Technical analysis suggests bearish trends, though with lower confidence. Despite positive sentiment,
+the weight of bearish valuation and fundamental signals, combined with risk management constraints, supports a 'hold' decision."
 }
+
 
 ```
 You can optionally specify the start and end dates to make decisions for a specific time period.
