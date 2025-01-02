@@ -101,11 +101,12 @@ Final Result:
             "confidence": 1.0
         }
     ],
-    "reasoning": "The risk management constraints require a bearish action, but since the current position is 0 shares, selling is 
-not possible. Valuation Analysis provides a strong bearish signal with 82% confidence due to significant overvaluation. Fundamental
- Analysis also supports a bearish stance with concerns over growth and high price ratios. Sentiment is unanimously bearish with 100
-% confidence. Technical Analysis is bullish but holds the least weight and confidence. Given these factors, the decision is to hold,
-with no buy or sell action possible due to portfolio constraints."
+    "reasoning": "The risk management constraints require a bearish action.
+Valuation Analysis provides a strong bearish signal with 82% confidence due to significant overvaluation.
+Fundamental Analysis also supports a bearish stance with concerns over growth and high price ratios.
+Sentiment is unanimously bearish with 100% confidence.
+Technical Analysis is bullish but holds the least weight and confidence.
+Given these factors, the decision is to hold, with no buy or sell action possible due to portfolio constraints."
 }
 ```
 
@@ -355,7 +356,9 @@ Final Result:
             "confidence": 0.82
         }
     ],
-    "reasoning": "The risk management constraints require a 'hold' action. The dominant bearish signals from valuation (82% confidence) and sentiment (100% confidence) outweigh the bullish technical signal (24% confidence). Fundamental analysis is also bearish. Thus, despite the technical bullish signal, the overall bearish sentiment and valuation drive the decision to hold."
+    "reasoning": "The risk management constraints require a 'hold' action.
+The dominant bearish signals from valuation (82% confidence) and sentiment (100% confidence) outweigh the bullish technical signal (24% confidence).
+Fundamental analysis is also bearish. Thus, despite the technical bullish signal, the overall bearish sentiment and valuation drive the decision to hold."
 
 ```
 ### Running the Backtester
@@ -405,3 +408,47 @@ ai-hedge-fund/
 ├── ...
 ```
 
+
+
+## Portfolio manager making final trading decisions.
+
+              
+
+    When weighing the different signals for direction and timing:
+      1. Valuation Analysis (35% weight)
+         - Primary driver of fair value assessment
+         - Determines if price offers good entry/exit point
+                
+      2. Fundamental Analysis (30% weight)
+         - Business quality and growth assessment
+         - Determines conviction in long-term potential
+                
+      3. Technical Analysis (25% weight)
+         - Secondary confirmation
+         - Helps with entry/exit timing
+                
+      4. Sentiment Analysis (10% weight)
+         - Final consideration
+         - Can influence sizing within risk limits
+                
+    The decision process should be:
+      1. First check risk management constraints
+      2. Then evaluate valuation signal
+      3. Then evaluate fundamentals signal
+      4. Use technical analysis for timing
+      5. Consider sentiment for final adjustment
+                
+    Provide the following in your output:
+      - "action": "buy" | "sell" | "hold",
+      - "quantity": <positive integer>
+      - "confidence": <float between 0 and 1>
+      - "agent_signals": <list of agent signals including agent name, signal (bullish | bearish | neutral), and their confidence>
+      - "reasoning": <concise explanation of the decision including how you weighted the signals>
+
+    Trading Rules:
+      - Never exceed risk management position limits
+      - Only buy if you have available cash
+      - Only sell if you have shares to sell
+      - Quantity must be ≤ current position for sells
+      - Quantity must be ≤ max_position_size from risk management"""
+           
