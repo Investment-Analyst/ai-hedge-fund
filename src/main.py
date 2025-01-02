@@ -61,9 +61,10 @@ workflow.add_node("market_data_agent", market_data_agent)
 workflow.add_node("technical_analyst_agent", technical_analyst_agent)
 workflow.add_node("fundamentals_agent", fundamentals_agent)
 workflow.add_node("sentiment_agent", sentiment_agent)
+workflow.add_node("valuation_agent", valuation_agent)
 workflow.add_node("risk_management_agent", risk_management_agent)
 workflow.add_node("portfolio_management_agent", portfolio_management_agent)
-workflow.add_node("valuation_agent", valuation_agent)
+
 
 # Define the workflow
 workflow.set_entry_point("market_data_agent")
@@ -84,7 +85,7 @@ app = workflow.compile()
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description='Run the hedge fund trading system')
     parser.add_argument('--ticker', type=str, required=True, help='Stock ticker symbol')
-    parser.add_argument('--start-date', type=str, help='Start date (YYYY-MM-DD). Defaults to 3 months before end date')
+    parser.add_argument('--start-date', type=str, help='Start date (YYYY-MM-DD). Defaults to 1 months before end date')
     parser.add_argument('--end-date', type=str, help='End date (YYYY-MM-DD). Defaults to today')
     parser.add_argument('--show-reasoning', action='store_true', help='Show reasoning from each agent')
 
