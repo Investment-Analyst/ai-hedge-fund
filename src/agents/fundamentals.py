@@ -19,15 +19,19 @@ def fundamentals_agent(state: AgentState):
     profitability_score = 0
     if metrics["return_on_equity"] > 0.15:  # Strong ROE above 15%
         profitability_score += 1
+    if metrics["return_on_assets"] > 0.1:  # Strong ROA above 10%
+        profitability_score += 1
+    if metrics["earnings_per_share"] > 5:  # Strong EPS above 5
+        profitability_score += 1
     if metrics["net_margin"] > 0.20:  # Healthy profit margins
         profitability_score += 1
     if metrics["operating_margin"] > 0.15:  # Strong operating efficiency
         profitability_score += 1
         
-    signals.append('bullish' if profitability_score >= 2 else 'bearish' if profitability_score == 0 else 'neutral')
+    signals.append('bullish' if profitability_score >= 4 else 'bearish' if profitability_score == 0 else 'neutral')
     reasoning["profitability_signal"] = {
         "signal": signals[0],
-        "details": f"ROE: {metrics['return_on_equity']:.2%}, Net Margin: {metrics['net_margin']:.2%}, Op Margin: {metrics['operating_margin']:.2%}"
+        "details": f"ROE: {metrics['return_on_equity']:.2%}, ROA: {metrics['return_on_assets']:.2%}, EPS: {metrics['earnings_per_share']:.2%}, Net Margin: {metrics['net_margin']:.2%}, Op Margin: {metrics['operating_margin']:.2%}"
     }
     
     # 2. Growth Analysis
