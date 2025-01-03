@@ -1,18 +1,17 @@
 # AI Hedge Fund
 
 
-用 7 個 AI Agent 分工來模擬的避險基金（hedge fund) 
-基於 langchainai 開發，其中透過底下這6個 AI Agent 來實現這個 hedge fund ：
+基於 langchainai 開發，用 7 個 AI Agent 分工來模擬的避險基金（hedge fund) ：
 
-1. 市場資料分析師 - 收集和預先處理市場資料
+1. 市場資料 Agent - 收集和預先處理市場資料
 2. 估值 Agent - 計算股票的內在價值，分析公司獲利能力、成長性、財務健康狀況和估值並產生交易信號
 3. 情緒 Agent - 分析市場情緒並產生交易信號
 4. 基本面 Agent - 分析基本面數據並產生交易信號
-5. 技術分析師 - 分析技術指標（如 MACD、RSI、Bollinger Bands）等並產生交易信號
-6. 風險管理員 - 計算風險指標（如波動率、最大回撤等）並設定持倉限制
+5. 技術分析 Agent - 分析技術指標（如 MACD、RSI、Bollinger Bands）等並產生交易信號
+6. 風險管理 Agent - 計算風險指標（如波動率、最大回撤等）並設定持倉限制
 7. 投資組合經理 - 作出最終交易決策並產生訂單
 
-每個 agent 都會展示其推理過程，讓你清楚了解它們的運作方式
+每個 Agent 都會展示其推理過程，讓你清楚了解它們的運作方式
    
 This system employs several agents working together:
 
@@ -116,211 +115,7 @@ You can also specify a `--show-reasoning` flag to print the reasoning of each ag
 poetry run python src/main.py --ticker AMD --show-reasoning
 ```
 
-**Example Output:**
-```
 
-==========  Fundamental Analysis Agent  ==========
-{
-  "signal": "bearish",
-  "confidence": "50%",
-  "reasoning": {
-    "profitability_signal": {
-      "signal": "bearish",
-      "details": "ROE: 3.20%, Net Margin: 7.50%, Op Margin: 6.55%"
-    },
-    "growth_signal": {
-      "signal": "neutral",
-      "details": "Revenue Growth: 4.38%, Earnings Growth: 34.86%"
-    },
-    "financial_health_signal": {
-      "signal": "bullish",
-      "details": "Current Ratio: 2.50, D/E: 0.22"
-    },
-    "price_ratios_signal": {
-      "signal": "bearish",
-      "details": "P/E: 145.67, P/B: 4.67, P/S: 10.95"
-    }
-  }
-}
-================================================
-
-==========   Valuation Analysis Agent   ==========
-{
-  "signal": "bearish",
-  "confidence": "66%",
-  "reasoning": {
-    "dcf_analysis": {
-      "signal": "bearish",
-      "details": "Intrinsic Value: $58,100,735,078.97, Market Cap: $196,018,899,323.34, Gap: -70.4%"
-    },
-    "owner_earnings_analysis": {
-      "signal": "bearish",
-      "details": "Owner Earnings Value: $75,054,227,036.91, Market Cap: $196,018,899,323.34, Gap: -61.7%"
-    }
-  }
-}
-================================================
-
-==========   Sentiment Analysis Agent   ==========
-{
-  "signal": "bullish",
-  "confidence": "67%",
-  "reasoning": "Bullish signals: 2, Bearish signals: 1"
-}
-================================================
-
-==========      Technical Analyst       ==========
-{
-  "signal": "bearish",
-  "confidence": "21%",
-  "strategy_signals": {
-    "trend_following": {
-      "signal": "bearish",
-      "confidence": "41%",
-      "metrics": {
-        "adx": 41.0529861434935,
-        "trend_strength": 0.410529861434935
-      }
-    },
-    "mean_reversion": {
-      "signal": "neutral",
-      "confidence": "50%",
-      "metrics": {
-        "z_score": -1.5509675081196312,
-        "price_vs_bb": 0.248967253315503,
-        "rsi_14": 37.4774774774775,
-        "rsi_28": 35.0818094321463
-      }
-    },
-    "momentum": {
-      "signal": "neutral",
-      "confidence": "50%",
-      "metrics": {
-        "momentum_1m": -0.12146209314793133,
-        "momentum_3m": -0.2581373746150951,
-        "momentum_6m": -0.2517667224417648,
-        "volume_momentum": 0.7962293356171966
-      }
-    },
-    "volatility": {
-      "signal": "neutral",
-      "confidence": "50%",
-      "metrics": {
-        "historical_volatility": 0.36826295249624114,
-        "volatility_regime": 0.8988278385390491,
-        "volatility_z_score": -0.5756173224340739,
-        "atr_ratio": 0.036669308007995
-      }
-    },
-    "statistical_arbitrage": {
-      "signal": "neutral",
-      "confidence": "50%",
-      "metrics": {
-        "hurst_exponent": 4.686994974318529e-16,
-        "skewness": -0.83853114293348,
-        "kurtosis": 3.104187605840047
-      }
-    }
-  }
-}
-================================================
-
-==========    Risk Management Agent     ==========
-{
-  "max_position_size": 12500.0,
-  "risk_score": 10,
-  "trading_action": "hold",
-  "risk_metrics": {
-    "volatility": 0.4693490668206053,
-    "value_at_risk_95": -0.050070329874617014,
-    "max_drawdown": -0.35377255925201134,
-    "market_risk_score": 6,
-    "stress_test_results": {
-      "market_crash": {
-        "potential_loss": -0.0,
-        "portfolio_impact": -0.0
-      },
-      "moderate_decline": {
-        "potential_loss": -0.0,
-        "portfolio_impact": -0.0
-      },
-      "slight_decline": {
-        "potential_loss": -0.0,
-        "portfolio_impact": -0.0
-      }
-    }
-  },
-  "reasoning": "Risk Score 10/10: Market Risk=6, Volatility=46.93%, VaR=-5.01%, Max Drawdown=-35.38%"
-}
-================================================
-
-==========  Portfolio Management Agent  ==========
-{
-  "action": "hold",
-  "quantity": 0,
-  "confidence": 0.66,
-  "agent_signals": [
-    {
-      "agent": "Technical Analysis",
-      "signal": "bearish",
-      "confidence": 0.21
-    },
-    {
-      "agent": "Fundamental Analysis",
-      "signal": "bearish",
-      "confidence": 0.5
-    },
-    {
-      "agent": "Sentiment Analysis",
-      "signal": "bullish",
-      "confidence": 0.67
-    },
-    {
-      "agent": "Valuation Analysis",
-      "signal": "bearish",
-      "confidence": 0.66
-    }
-  ],
-  "reasoning": "The risk management signal mandates a 'hold' action, which must be adhered to. Valuation analysis is strongly beari
-sh with a high confidence of 66%, indicating overvaluation and a poor entry point. Fundamental analysis is also bearish, driven by 
-high valuation ratios and weak profitability. Technical analysis suggests bearish trends, though with lower confidence. Despite pos
-itive sentiment, the weight of bearish valuation and fundamental signals, combined with risk management constraints, supports a 'hold' decision."
-}
-================================================
-
-Final Result:
-{
-  "action": "hold",
-  "quantity": 0,
-  "confidence": 0.66,
-  "agent_signals": [
-    {
-      "agent": "Technical Analysis",
-      "signal": "bearish",
-      "confidence": 0.21
-    },
-    {
-      "agent": "Fundamental Analysis",
-      "signal": "bearish",
-      "confidence": 0.50
-    },
-    {
-      "agent": "Sentiment Analysis",
-      "signal": "bullish",
-      "confidence": 0.67
-    },
-    {
-      "agent": "Valuation Analysis",
-      "signal": "bearish",
-      "confidence": 0.66
-    }
-  ],
-  "reasoning": "The risk management signal mandates a 'hold' action, which must be adhered to.
-Valuation analysis is strongly bearish with a high confidence of 66%, indicating overvaluation and a poor entry point.
-Fundamental analysis is also bearish, driven by high valuation ratios and weak profitability.
-Technical analysis suggests bearish trends, though with lower confidence. Despite positive sentiment,
-the weight of bearish valuation and fundamental signals, combined with risk management constraints, supports a 'hold' decision."
-}
 
 
 ```
