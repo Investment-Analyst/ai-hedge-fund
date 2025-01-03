@@ -113,7 +113,7 @@ You can also specify a `--show-reasoning` flag to print the reasoning of each ag
 
 ```bash
 poetry run python src/main.py --ticker AMD --show-reasoning
-```
+
 
 
 
