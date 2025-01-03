@@ -381,43 +381,38 @@ def calculate_volatility_signals(prices_df):
         }
     }
 
+
 def calculate_stat_arb_signals(prices_df):
     """
     Statistical arbitrage signals based on price action analysis
     """
     # Calculate price distribution statistics
     returns = prices_df['close'].pct_change()
-    
+
     # Skewness and kurtosis
     skew = returns.rolling(63).skew()
     kurt = returns.rolling(63).kurt()
-    
-    # Test for mean reversion using Hurst exponent
-    hurst = calculate_hurst_exponent(prices_df['close'])
-    
-    # Correlation analysis
-    # (would include correlation with related securities in real implementation)
-    
+
     # Generate signal based on statistical properties
-    if hurst < 0.4 and skew.iloc[-1] > 1:
+    if skew.iloc[-1] > 1 and kurt.iloc[-1] > 3:
         signal = 'bullish'
-        confidence = (0.5 - hurst) * 2
-    elif hurst < 0.4 and skew.iloc[-1] < -1:
+        confidence = min((abs(skew.iloc[-1]) + kurt.iloc[-1]) / 5, 1.0)
+    elif skew.iloc[-1] < -1 and kurt.iloc[-1] > 3:
         signal = 'bearish'
-        confidence = (0.5 - hurst) * 2
+        confidence = min((abs(skew.iloc[-1]) + kurt.iloc[-1]) / 5, 1.0)
     else:
         signal = 'neutral'
         confidence = 0.5
-    
+
     return {
         'signal': signal,
         'confidence': confidence,
         'metrics': {
-            'hurst_exponent': float(hurst),
             'skewness': float(skew.iloc[-1]),
             'kurtosis': float(kurt.iloc[-1])
         }
     }
+
 
 def weighted_signal_combination(signals, weights):
     """
@@ -613,37 +608,7 @@ def calculate_atr(df: pd.DataFrame, period: int = 14) -> pd.Series:
     
     return true_range.rolling(period).mean()
 
-def calculate_hurst_exponent(price_series: pd.Series, max_lag: int = 20) -> float:
-    """
-    Calculate Hurst Exponent to determine long-term memory of time series
-    H < 0.5: Mean reverting series
-    H = 0.5: Random walk
-    H > 0.5: Trending series
-    
-    Args:
-        price_series: Array-like price data
-        max_lag: Maximum lag for R/S calculation
-    
-    Returns:
-        float: Hurst exponent
-    """
-    lags = range(2, min(max_lag, len(price_series) // 2))
-    if len(lags) < 2:
-        return 0.5  # Default to random walk if insufficient data
 
-    # Add small epsilon to avoid log(0)
-    tau = [max(1e-6, np.sqrt(np.std(np.subtract(price_series[lag:], price_series[:-lag])))) for lag in lags]
-
-    # Return the Hurst exponent from linear fit
-    try:
-        if len(lags) < 2 or len(tau) < 2:
-            raise ValueError("Insufficient data for regression")
-        reg = np.polyfit(np.log(lags), np.log(tau), 1)
-        if abs(reg[0]) < 1e-6:
-            print("Warning: Hurst exponent calculation yielded near-zero slope.")
-        return reg[0]  # Hurst exponent is the slope
-    except (ValueError, RuntimeWarning):
-        return 0.5  # Default to random walk
 
 def calculate_obv(prices_df: pd.DataFrame) -> pd.Series:
     obv = [0]
