@@ -154,3 +154,21 @@ def get_price_data(
 ) -> pd.DataFrame:
     prices = get_prices(ticker, start_date, end_date)
     return prices_to_df(prices)
+
+
+def get_news_sentiment(
+    ticker: str,
+    limit: int = 100
+) -> List[Dict[str, Any]]:
+    """Fetch news sentiment for a specific ticker."""
+    url = "https://api.financialdatasets.ai/news"
+    querystring = {"ticker": ticker, "limit": str(limit)}
+    response = requests.get(url, headers=headers, params=querystring)
+    if response.status_code != 200:
+        raise Exception(
+            f"Error fetching news data: {response.status_code} - {response.text}"
+        )
+    news_data = response.json().get("news", [])
+    if not news_data:
+        raise ValueError("No news data returned")
+    return news_data

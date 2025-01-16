@@ -17,7 +17,7 @@ def market_data_agent(state: AgentState):
     if not data["start_date"]:
         # Calculate 6 months before end_date
         end_date_obj = datetime.strptime(end_date, '%Y-%m-%d')
-        start_date = (end_date_obj - relativedelta(months=6)).strftime('%Y-%m-%d')
+        start_date = (end_date_obj - relativedelta(months=7)).strftime('%Y-%m-%d')
     else:
         start_date = data["start_date"]
 

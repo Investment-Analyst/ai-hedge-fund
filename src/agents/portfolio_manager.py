@@ -77,8 +77,7 @@ def portfolio_management_agent(state: AgentState):
                 Only include the action, quantity, reasoning, confidence, and agent_signals in your output as JSON.  Do not include any JSON markdown.
 
                 Remember, the action must be either buy, sell, or hold.
-                You can only buy if you have available cash.
-                You can only sell if you have shares in the portfolio to sell.
+                Go long if there is a “buy” signal and go short if there is a “sell” signal.
                 """
             ),
         ]

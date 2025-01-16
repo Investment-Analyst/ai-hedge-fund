@@ -104,8 +104,8 @@ if __name__ == "__main__":
 
     # Set up portfolio
     portfolio = {
-        "cash": 100000.0,  # $100,000 initial cash
-        "stock": 0  # No initial stock position
+        "cash": 10000000.0,  # $100,000 initial cash
+        "stock": 100  # No initial stock position
     }
 
     # Generate file name
